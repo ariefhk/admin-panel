@@ -67,6 +67,7 @@ const NavMain: React.FC<NavMainProps> = ({ items }) => {
                 ) : (
                   <SidebarMenuItem>
                     <SidebarMenuButton tooltip={item.title} isActive={hasActiveSubItem}>
+                      {item.icon && <item.icon />}
                       <Link href={item.url} className="w-full">
                         <span>{item.title}</span>
                       </Link>
