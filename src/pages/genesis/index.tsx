@@ -1,18 +1,19 @@
 import DashboardLayout from "@/components/layouts/DashboardLayout";
-import DashboardPage from "@/components/pages/DashboardPage";
 import { withAuth } from "@/utils/with-auth";
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 
-export default function Home() {
-  return <DashboardPage />;
-}
+const GenesisPage = () => {
+  return <h1>test</h1>;
+};
 
-Home.getLayout = function getLayout(page: ReactElement) {
+export default GenesisPage;
+
+GenesisPage.getLayout = function getLayout(page: ReactElement) {
   const breadcrumbLinks = [
     {
-      title: "Dashboard",
-      href: "/",
-      isActive: true,
+      title: "Genesis",
+      href: "/genesis",
+      isActive: false,
     },
   ];
 
