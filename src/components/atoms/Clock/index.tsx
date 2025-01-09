@@ -50,7 +50,7 @@ export type ClockType = {
 };
 
 const Clock = ({ initialDate }: ClockType) => {
-  const [time, setTime] = useState(initialDate ?? new Date());
+  const [time, setTime] = useState(initialDate || new Date());
   const { timeZoneAlias, formattedDate } = getCurrentIndonesiaTime();
   const formattedTime = useMemo(() => {
     return `${addZeroPrefix(time.getHours())}:${addZeroPrefix(time.getMinutes())}:${addZeroPrefix(time.getSeconds())}`;

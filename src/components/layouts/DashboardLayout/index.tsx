@@ -7,7 +7,7 @@ import DashboardBreadCrumb, { DashboardBreadCrumbProps } from "@/components/orga
 
 interface DashboardLayoutProps extends DashboardBreadCrumbProps {
   children: React.ReactNode;
-  date?: Date;
+  date?: string;
 }
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, date, breadcrumbLinks }) => {
   const initialDate = date ? new Date(date) : undefined;

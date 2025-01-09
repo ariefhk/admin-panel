@@ -1,13 +1,29 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import ModalUser from "@/components/organism/Modal/User";
 import { User } from "@prisma/client";
 import axios from "axios";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { withAuth } from "@/utils/with-auth";
+import { useGetUsers } from "@/services/client/user";
+import { NextPageWithLayout } from "../_app";
 
-const UsersPage = () => {
+interface UsersPageProps {
+  session: {
+    user: {
+      email: string;
+      name: string;
+      image: string;
+      token: string;
+    };
+  };
+}
+
+const UsersPage: NextPageWithLayout<UsersPageProps> = ({ session }) => {
+  const { data } = useGetUsers(session?.user?.token);
+
+  console.log(data);
   const [users, setUsers] = useState<User[]>([]);
   const [isLoadingUsers, setIsLoadingUsers] = useState<boolean>(false);
   const [triggerLoad, setTriggerLoad] = useState<boolean>(true);

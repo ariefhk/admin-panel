@@ -1,9 +1,8 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
-
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import {
+import useSidebar, {
   SidebarGroup,
   SidebarMenu,
   SidebarMenuButton,
@@ -17,6 +16,7 @@ import Link from "next/link";
 import React from "react";
 import { INavItems } from "../AppSidebar";
 import { usePathname } from "next/navigation";
+import { cn } from "@/utils/cn";
 
 interface NavMainProps {
   items: INavItems[];
@@ -24,6 +24,7 @@ interface NavMainProps {
 
 const NavMain: React.FC<NavMainProps> = ({ items }) => {
   const pathname = usePathname();
+  const { state } = useSidebar();
 
   return (
     <SidebarGroup>
@@ -38,7 +39,13 @@ const NavMain: React.FC<NavMainProps> = ({ items }) => {
                 {item.items.length > 0 ? (
                   <SidebarMenuItem>
                     <CollapsibleTrigger asChild>
-                      <SidebarMenuButton tooltip={item.title}>
+                      <SidebarMenuButton
+                        tooltip={item.title}
+                        className={cn({
+                          "group-data-[state=open]/collapsible:bg-black group-data-[state=open]/collapsible:text-white":
+                            hasActiveSubItem && state === "collapsed",
+                        })}
+                      >
                         {item.icon && <item.icon />}
                         <span>{item.title}</span>
                         <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />

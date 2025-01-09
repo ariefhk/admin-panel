@@ -1,7 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { UserService } from "@/services/user";
-import { LoginUserRequest } from "@/services/user/user.type";
+import { UserService } from "@/services/server/user";
+import { LoginUserRequest } from "@/services/server/user/user.type";
 
 const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
