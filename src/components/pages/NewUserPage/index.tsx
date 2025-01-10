@@ -1,53 +1,22 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/shadcn-ui/table";
 import { Button } from "@/components/shadcn-ui/button";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import ModalUser from "@/components/organism/Modal/User";
 import { User } from "@prisma/client";
-import axios from "axios";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { withAuth } from "@/utils/with-auth";
 import { useGetUsers } from "@/services/client/user";
+import { UsersPageProps } from "@/types/user";
+import { newUserBreadcrumbLinks } from "./NewUserPage.constant";
 import { NextPageWithLayout } from "@/types/app";
 
-interface UsersPageProps {
-  session: {
-    user: {
-      email: string;
-      name: string;
-      image: string;
-      token: string;
-    };
-  };
-}
-
-const UsersPage: NextPageWithLayout<UsersPageProps> = ({ session }) => {
-  const { data } = useGetUsers(session?.user?.token);
-
-  console.log(data);
-  const [users, setUsers] = useState<User[]>([]);
-  const [isLoadingUsers, setIsLoadingUsers] = useState<boolean>(false);
-  const [triggerLoad, setTriggerLoad] = useState<boolean>(true);
+const NewUsersPage: NextPageWithLayout<UsersPageProps> = ({ session }) => {
+  const { data: users } = useGetUsers(session?.user?.token);
   const [isOpenAddUserModal, setIsOpenAddUserModal] = useState(false);
   const [isOpenEditUserModal, setIsOpenEditUserModal] = useState(false);
   const [isOpenDeleteUserModal, setIsOpenDeleteUserModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | undefined>(undefined);
 
-  useEffect(() => {
-    if (triggerLoad) {
-      setIsLoadingUsers(true);
-      axios
-        .get("/api/user")
-        .then((res) => {
-          console.log(res.data);
-          setUsers(res.data);
-        })
-        .catch(() => {})
-        .finally(() => {
-          setIsLoadingUsers(false);
-          setTriggerLoad(false);
-        });
-    }
-  }, [triggerLoad]);
   return (
     <>
       <div className="flex-1 space-y-4">
@@ -69,7 +38,7 @@ const UsersPage: NextPageWithLayout<UsersPageProps> = ({ session }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {!isLoadingUsers ? (
+            {users ? (
               users?.length >= 0 &&
               users.map((user) => {
                 return (
@@ -109,18 +78,12 @@ const UsersPage: NextPageWithLayout<UsersPageProps> = ({ session }) => {
           </TableBody>
         </Table>
       </div>
-      <ModalUser
-        type="create"
-        isOpenUserModal={isOpenAddUserModal}
-        handleOpenUserModal={setIsOpenAddUserModal}
-        handleTriggerLoad={setTriggerLoad}
-      />
+      <ModalUser type="create" isOpenUserModal={isOpenAddUserModal} handleOpenUserModal={setIsOpenAddUserModal} />
       <ModalUser
         type="edit"
         user={selectedUser}
         isOpenUserModal={isOpenEditUserModal}
         handleOpenUserModal={setIsOpenEditUserModal}
-        handleTriggerLoad={setTriggerLoad}
         handleSelectedUser={setSelectedUser}
       />
       <ModalUser
@@ -128,30 +91,16 @@ const UsersPage: NextPageWithLayout<UsersPageProps> = ({ session }) => {
         user={selectedUser}
         isOpenUserModal={isOpenDeleteUserModal}
         handleOpenUserModal={setIsOpenDeleteUserModal}
-        handleTriggerLoad={setTriggerLoad}
         handleSelectedUser={setSelectedUser}
       />
     </>
   );
 };
 
-export default UsersPage;
+export default NewUsersPage;
 
-UsersPage.getLayout = function getLayout(page: ReactElement) {
-  const breadcrumbLinks = [
-    {
-      title: "Users",
-      href: "#",
-      isActive: false,
-    },
-    {
-      title: "List",
-      href: "/users",
-      isActive: true,
-    },
-  ];
-
-  return <DashboardLayout breadcrumbLinks={breadcrumbLinks}>{page}</DashboardLayout>;
+NewUsersPage.getLayout = function getLayout(page: ReactElement) {
+  return <DashboardLayout breadcrumbLinks={newUserBreadcrumbLinks}>{page}</DashboardLayout>;
 };
 
 export const getServerSideProps = withAuth(async (context, session) => {

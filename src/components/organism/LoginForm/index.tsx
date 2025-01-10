@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/shadcn-ui/button";
+import { Card, CardContent } from "@/components/shadcn-ui/card";
+import { Input } from "@/components/shadcn-ui/input";
+import { Label } from "@/components/shadcn-ui/label";
 import useInput from "@/hooks/use-input";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/utils/cn";

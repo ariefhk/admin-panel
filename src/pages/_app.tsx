@@ -1,29 +1,19 @@
 import "@/styles/globals.css";
-import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import { Session } from "next-auth";
-import { Toaster } from "@/components/ui/toaster";
-import { ReactElement, ReactNode, useState } from "react";
-import { NextPage } from "next";
+import { Toaster } from "@/components/shadcn-ui/toaster";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { CustomAppProps } from "@/types/app";
+import React from "react";
 
-export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode;
-};
+export const queryClientInstance = new QueryClient();
 
-interface CustomAppProps extends AppProps {
-  session: Session;
-  Component: NextPageWithLayout;
-}
-
-export default function App({ session, Component, pageProps }: Readonly<CustomAppProps>) {
-  const [queryClient] = useState(() => new QueryClient());
+const App: React.FC<CustomAppProps> = ({ session, Component, pageProps }) => {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
     <SessionProvider session={session}>
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClientInstance}>
         <Hydrate state={pageProps.dehydratedState}>
           {getLayout(<Component {...pageProps} />)}
           <Toaster />
@@ -32,4 +22,6 @@ export default function App({ session, Component, pageProps }: Readonly<CustomAp
       </QueryClientProvider>
     </SessionProvider>
   );
-}
+};
+
+export default App;

@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/components/shadcn-ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/shadcn-ui/dialog";
+import { Input } from "@/components/shadcn-ui/input";
+import { Label } from "@/components/shadcn-ui/label";
 import useInput from "@/hooks/use-input";
 import { User } from "@prisma/client";
 import React, { useEffect } from "react";
@@ -13,7 +13,7 @@ interface ModalUserProps {
   user?: User;
   type: "create" | "edit" | "delete";
   handleOpenUserModal: React.Dispatch<React.SetStateAction<boolean>>;
-  handleTriggerLoad: React.Dispatch<React.SetStateAction<boolean>>;
+  handleTriggerLoad?: React.Dispatch<React.SetStateAction<boolean>>;
   handleSelectedUser?: React.Dispatch<React.SetStateAction<User | undefined>>;
 }
 
@@ -43,7 +43,7 @@ const ModalUser: React.FC<ModalUserProps> = ({
 
   useEffect(() => {
     if (createUserState.isSuccess || editUserState.isSuccess || deleteUserState.isSuccess) {
-      handleTriggerLoad(true);
+      handleTriggerLoad?.(true);
       handleOpenUserModal(false);
       if (user) handleSelectedUser?.(undefined);
     }

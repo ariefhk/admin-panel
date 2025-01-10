@@ -1,7 +1,7 @@
 import { CalendarDateRangePicker } from "@/components/atoms/CalendarDateRangePicker";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/shadcn-ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/shadcn-ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn-ui/tabs";
 import React from "react";
 import { Overview } from "./Overview";
 import { RecentSales } from "./RecentSales";

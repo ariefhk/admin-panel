@@ -4,10 +4,10 @@ import * as React from "react";
 import { addDays, format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn-ui/popover";
+import { Button } from "@/components/shadcn-ui/button";
 import { cn } from "@/utils/cn";
-import { Calendar } from "@/components/ui/calendar";
+import { Calendar } from "@/components/shadcn-ui/calendar";
 
 export function CalendarDateRangePicker({ className }: React.HTMLAttributes<HTMLDivElement>) {
   const [date, setDate] = React.useState<DateRange | undefined>({

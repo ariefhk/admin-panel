@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/shadcn-ui/collapsible";
 import useSidebar, {
   SidebarGroup,
   SidebarMenu,
@@ -10,7 +10,7 @@ import useSidebar, {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar";
+} from "@/components/shadcn-ui/sidebar";
 import RenderList from "@/components/atoms/Renderlist";
 import Link from "next/link";
 import React from "react";

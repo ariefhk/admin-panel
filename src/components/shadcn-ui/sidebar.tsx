@@ -4,12 +4,12 @@ import { VariantProps, cva } from "class-variance-authority";
 import { PanelLeft } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Button } from "@/components/shadcn-ui/button";
+import { Input } from "@/components/shadcn-ui/input";
+import { Separator } from "@/components/shadcn-ui/separator";
+import { Sheet, SheetContent } from "@/components/shadcn-ui/sheet";
+import { Skeleton } from "@/components/shadcn-ui/skeleton";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/shadcn-ui/tooltip";
 import { cn } from "@/utils/cn";
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";

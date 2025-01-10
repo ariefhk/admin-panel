@@ -1,45 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
 
 const addZeroPrefix = (nums: number) => (nums < 10 ? `0${nums}` : nums);
 
-function getCurrentIndonesiaTime() {
-  const currentDate = new Date();
-
-  // Set threshold hours to determine which time zone to use
-  const witThresholdHour = currentDate.getHours() + 1; // Threshold for East Indonesia Time (WIT)
-  const witaThresholdHour = currentDate.getHours() + 2; // Threshold for Middle Indonesia Time (WITA)
-
-  let timeZone;
-  let timeZoneAlias;
-
-  // Compare current hour against thresholds to determine the time zone
-  const currentHour = currentDate.getHours();
-  if (currentHour >= witThresholdHour) {
-    timeZone = "Asia/Jayapura"; // East Indonesia Time (WIT)
-    timeZoneAlias = "WIT";
-  } else if (currentHour >= witaThresholdHour) {
-    timeZone = "Asia/Makassar"; // Middle Indonesia Time (WITA)
-    timeZoneAlias = "WITA";
-  } else {
-    timeZone = "Asia/Jakarta"; // Western Indonesia Time (WIB)
-    timeZoneAlias = "WIB";
-  }
-
+function getCurrentIndonesiaTime(date: Date) {
   const options: Intl.DateTimeFormatOptions = {
-    timeZone,
-    weekday: "long", // Full name of the day (e.g., Minggu)
-    year: "numeric", // 4-digit year
-    month: "long", // Full name of the month (e.g., September)
-    day: "numeric", // Day of the month (e.g., 22)
+    timeZone: "Asia/Jakarta", // Default to WIB
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   };
 
   const formatter = new Intl.DateTimeFormat("en", options);
-  const formattedDate = formatter.format(currentDate);
+  const formattedDate = formatter.format(date);
+
+  // Determine the time zone alias
+  const currentHour = date.getHours();
+  const timeZoneAlias = currentHour >= 23 ? "WIT" : currentHour >= 22 ? "WITA" : "WIB";
 
   return {
-    timeZone,
     timeZoneAlias,
     formattedDate,
   };
@@ -50,11 +32,14 @@ export type ClockType = {
 };
 
 const Clock = ({ initialDate }: ClockType) => {
-  const [time, setTime] = useState(initialDate || new Date());
-  const { timeZoneAlias, formattedDate } = getCurrentIndonesiaTime();
+  const [time, setTime] = useState<Date | null>(null); // Null initially for server match
+  const serverDate = initialDate || new Date();
+  const { timeZoneAlias, formattedDate } = useMemo(() => getCurrentIndonesiaTime(time || serverDate), [time, serverDate]);
+
   const formattedTime = useMemo(() => {
-    return `${addZeroPrefix(time.getHours())}:${addZeroPrefix(time.getMinutes())}:${addZeroPrefix(time.getSeconds())}`;
-  }, [time]);
+    const current = time || serverDate;
+    return `${addZeroPrefix(current.getHours())}:${addZeroPrefix(current.getMinutes())}:${addZeroPrefix(current.getSeconds())}`;
+  }, [time, serverDate]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -66,7 +51,7 @@ const Clock = ({ initialDate }: ClockType) => {
 
   return (
     <div className="w-max flex flex-col items-end">
-      <div className="flex w-[98px] text-[16px] font-bold  justify-between ">
+      <div className="flex w-[98px] text-[16px] font-bold justify-between">
         <p>{formattedTime}</p>
         <p>{timeZoneAlias}</p>
       </div>

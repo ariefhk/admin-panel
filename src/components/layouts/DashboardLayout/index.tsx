@@ -1,7 +1,7 @@
 import { AppSidebar } from "@/components/organism/Sidebar/AppSidebar";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/shadcn-ui/sidebar";
 import React from "react";
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@/components/shadcn-ui/separator";
 import Clock from "@/components/atoms/Clock";
 import DashboardBreadCrumb, { DashboardBreadCrumbProps } from "@/components/organism/DashboardBreadcrumb";
 

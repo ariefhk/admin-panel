@@ -1,7 +1,8 @@
+import { User } from "@prisma/client";
 import { axiosInstance } from "../axios";
 import { useQuery } from "react-query";
 
-const fetchGetUser = async () => {
+const fetchGetUser = async (): Promise<User[]> => {
   const result = await axiosInstance("/user");
   return result.data;
 };

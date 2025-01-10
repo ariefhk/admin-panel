@@ -1,4 +1,5 @@
 import { toast } from "@/hooks/use-toast";
+import { queryClientInstance } from "@/pages/_app";
 import { User } from "@prisma/client";
 import axios from "axios";
 import { useState } from "react";
@@ -40,6 +41,7 @@ const useModalUserHooks = () => {
         title: "Success",
         description: "User has been created!",
       });
+      queryClientInstance.invalidateQueries("users");
       setCreateUserState({ isInitial: false, isSuccess: true, isError: false, isLoading: false });
     } catch (err) {
       console.error(err);
@@ -64,6 +66,7 @@ const useModalUserHooks = () => {
         title: "Success",
         description: "User has been edited!",
       });
+      queryClientInstance.invalidateQueries("users");
       setEditUserState({ isInitial: false, isSuccess: true, isError: false, isLoading: false });
     } catch (err) {
       toast({
@@ -88,6 +91,7 @@ const useModalUserHooks = () => {
         title: "Success",
         description: "User has been deleted!",
       });
+      queryClientInstance.invalidateQueries("users");
       setDeleteUserState({ isInitial: false, isSuccess: true, isError: false, isLoading: false });
     } catch (err) {
       toast({

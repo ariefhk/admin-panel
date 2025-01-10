@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { AudioWaveform, BookOpen, Bot, Command, GalleryVerticalEnd, Home, Settings2, SquareTerminal } from "lucide-react";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/shadcn-ui/sidebar";
 import { TeamSwitcher } from "../TeamSwitcher";
 import { NavMain } from "../NavMain";
 import { NavUser } from "../NavUser";
